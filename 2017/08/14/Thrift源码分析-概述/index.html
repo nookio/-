@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="简介我司采用的RPC框架是apache开源的thrift，并在上层封装了服务注册和自动分配的功能，我将在两个部分分别介绍我司的RPC框架，首先是从底层进行分析整个的工作原理，下一步完成给thrift添加上下文，最终介绍我司的封装">
+<meta name="description" content="简介 我司采用的RPC框架是apache开源的thrift，并在上层封装了服务注册和自动分配的功能，我将在两个部分分别介绍我司的RPC框架，首先是从底层进行分析整个的工作原理，下一步完成给thrift添加上下文，最终介绍我司的封装 &amp;lt;!--more--&amp;gt; Thrift源于Facebook, 目前已经作为开源项目提交给了Apahce。Thrift解决了Facebook各系统的大数据量传输">
 <meta name="keywords" content="RPC,原理,源码,Thrift">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Thrift源码分析--概述">
 <meta property="og:url" content="/2017/08/14/Thrift源码分析-概述/index.html">
 <meta property="og:site_name" content="Ignite">
-<meta property="og:description" content="简介我司采用的RPC框架是apache开源的thrift，并在上层封装了服务注册和自动分配的功能，我将在两个部分分别介绍我司的RPC框架，首先是从底层进行分析整个的工作原理，下一步完成给thrift添加上下文，最终介绍我司的封装">
+<meta property="og:description" content="简介 我司采用的RPC框架是apache开源的thrift，并在上层封装了服务注册和自动分配的功能，我将在两个部分分别介绍我司的RPC框架，首先是从底层进行分析整个的工作原理，下一步完成给thrift添加上下文，最终介绍我司的封装 &amp;lt;!--more--&amp;gt; Thrift源于Facebook, 目前已经作为开源项目提交给了Apahce。Thrift解决了Facebook各系统的大数据量传输">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-08-16T16:24:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Thrift源码分析--概述">
-<meta name="twitter:description" content="简介我司采用的RPC框架是apache开源的thrift，并在上层封装了服务注册和自动分配的功能，我将在两个部分分别介绍我司的RPC框架，首先是从底层进行分析整个的工作原理，下一步完成给thrift添加上下文，最终介绍我司的封装">
+<meta name="twitter:description" content="简介 我司采用的RPC框架是apache开源的thrift，并在上层封装了服务注册和自动分配的功能，我将在两个部分分别介绍我司的RPC框架，首先是从底层进行分析整个的工作原理，下一步完成给thrift添加上下文，最终介绍我司的封装 &amp;lt;!--more--&amp;gt; Thrift源于Facebook, 目前已经作为开源项目提交给了Apahce。Thrift解决了Facebook各系统的大数据量传输">
 
 
 
@@ -358,27 +358,32 @@
       
 
       
-        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>我司采用的RPC框架是apache开源的thrift，并在上层封装了服务注册和自动分配的功能，我将在两个部分分别介绍我司的RPC框架，首先是从底层进行分析整个的工作原理，下一步完成给thrift添加上下文，最终介绍我司的封装</p>
-<a id="more"></a>
+        <h4>简介</h4>
+<p>我司采用的RPC框架是apache开源的thrift，并在上层封装了服务注册和自动分配的功能，我将在两个部分分别介绍我司的RPC框架，首先是从底层进行分析整个的工作原理，下一步完成给thrift添加上下文，最终介绍我司的封装</p>
+<p>&lt;!--more--&gt;</p>
 <p>Thrift源于Facebook, 目前已经作为开源项目提交给了Apahce。Thrift解决了Facebook各系统的大数据量传输通信和内部不同语言环境的跨平台调用。</p>
-<h4 id="官网"><a href="#官网" class="headerlink" title="官网"></a>官网</h4><p>Thrift的官方网站: <a href="http://thrift.apache.org/" target="_blank" rel="external">http://thrift.apache.org/</a></p>
-<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>作为一个高性能的RPC框架，Thrift的主要特点有</p>
+<h4>官网</h4>
+<p>Thrift的官方网站: http://thrift.apache.org/</p>
+<h4>特点</h4>
+<p>作为一个高性能的RPC框架，Thrift的主要特点有</p>
 <ol>
 <li>基于二进制的高性能的编解码框架</li>
 <li>基于NIO的底层通信</li>
 <li>相对简单的服务调用模型</li>
 <li>使用IDL支持跨平台调用</li>
 </ol>
-<h4 id="核心组件"><a href="#核心组件" class="headerlink" title="核心组件"></a>核心组件</h4><p><strong>Thrift其中包含了如下的几个核心组件：</strong></p>
+<h4>核心组件</h4>
+<p><strong>Thrift其中包含了如下的几个核心组件：</strong></p>
 <ul>
-<li><strong>TProtocol:</strong> 协议和编解码组件  </li>
-<li><strong>TTransport:</strong> 传输组件  </li>
-<li><strong>TProcessor:</strong> 服务调用组件  </li>
-<li><strong>TServer，Client:</strong> 服务器和客户端组件  </li>
+<li><strong>TProtocol:</strong> 协议和编解码组件</li>
+<li><strong>TTransport:</strong> 传输组件</li>
+<li><strong>TProcessor:</strong> 服务调用组件</li>
+<li><strong>TServer，Client:</strong> 服务器和客户端组件</li>
 <li><strong>IDL:</strong> 服务描述组件，负责生产跨平台客户端</li>
 </ul>
 <p>我会在后面的文章中依次介绍每一个组件</p>
-<h3 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h3><p>在学习本系列文章之前，建议具备的知识点：</p>
+<h3>建议</h3>
+<p>在学习本系列文章之前，建议具备的知识点：</p>
 <ul>
 <li>socket网络编程</li>
 <li>NIO基础知识，以及nio socket实现机制</li>
@@ -584,7 +589,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#官网"><span class="nav-number">2.</span> <span class="nav-text">官网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">3.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#核心组件"><span class="nav-number">4.</span> <span class="nav-text">核心组件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建议"><span class="nav-number"></span> <span class="nav-text">建议</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">官网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">核心组件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">建议</span></a></div>
             
 
           </div>
