@@ -3,10 +3,10 @@
   <entry>
     <title><![CDATA[Thrift源码分析--Transport]]></title>
     <url>%2F2017%2F08%2F16%2FThrift%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-Transport%2F</url>
-    <content type="text"><![CDATA[]]></content>
+    <content type="text"><![CDATA[简介Thrift是一个RPC调用框架，因此底层会封装一层传输层，用来帮助构建好的代码进行数据的传输。其中TTransport封装了传输层，同时他也封装了上层的流。比如他的一个子类：TIOStreamTransport。里面使用的就是我们常用的socket的InputStream和outPutStream TTransport的设计理念是和我们生成的代码、协议层完全解耦。 我们生成的代码（Client）只需要处理读到的数据以及处理，并不需要关心如何去读取这个数据。 协议层也只需要进行数据的编解码。但是无需关心这些数据是如何来的，是使用的http还是socket还是file等。 TTransport结构：这个并不是一个完整的传输层，还有一部分是在服务端使用的，用来帮助生成的代码来创建一个默认的TTransport，供给服务端使用。如果不好理解，可以类比Socket和ServerSocket。 TServerTransport结构： 分析TTransport：下面是源码分析，已经对注解翻译，并且去掉了具体实现 12345678910111213141516171819202122232425262728public abstract class TTransport &#123; // 判断传输是否打开， public abstract boolean isOpen(); // 判断是否还有新的数据来 public boolean peek() &#123; return isOpen(); &#125; // 打开传输层，可以用来读写数据了 public abstract void open() throws TTransportException; // 关闭 public abstract void close(); // 读取指定长度的数据 public abstract int read(byte[] buf, int off, int len) throws TTransportException; // 把数据全部读取出来 public int readAll(byte[] buf, int off, int len) throws TTransportException; // 写数据，实际调用的是下面的方法 public void write(byte[] buf) throws TTransportException; // 写数据 public abstract void write(byte[] buf, int off, int len) throws TTransportException; // 把缓冲区的数据全部都push出去 public void flush() throws TTransportException;&#125;]]></content>
       <tags>
-        <tag>原理</tag>
         <tag>RPC</tag>
+        <tag>原理</tag>
         <tag>源码</tag>
         <tag>Thrift</tag>
       </tags>
@@ -14,10 +14,10 @@
   <entry>
     <title><![CDATA[Thrift源码分析--概述]]></title>
     <url>%2F2017%2F08%2F14%2FThrift%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E6%A6%82%E8%BF%B0%2F</url>
-    <content type="text"><![CDATA[简介我司采用的RPC框架是apache开源的thrift，并在上层封装了服务注册和自动分配的功能，我将在两个部分分别介绍我司的RPC框架，首先是从底层进行分析整个的工作原理，下一步完成给thrift添加上下文，最终介绍我司的封装 Thrift源于Facebook, 目前已经作为开源项目提交给了Apahce。Thrift解决了Facebook各系统的大数据量传输通信和内部不同语言环境的跨平台调用。 官网Thrift的官方网站: http://thrift.apache.org/ 特点作为一个高性能的RPC框架，Thrift的主要特点有 基于二进制的高性能的编解码框架 基于NIO的底层通信 相对简单的服务调用模型 使用IDL支持跨平台调用 核心组件Thrift其中包含了如下的几个核心组件： TProtocol: 协议和编解码组件 TTransport: 传输组件 TProcessor: 服务调用组件 TServer，Client: 服务器和客户端组件 IDL: 服务描述组件，负责生产跨平台客户端 我会在后面的文章中依次介绍每一个组件]]></content>
+    <content type="text"><![CDATA[简介我司采用的RPC框架是apache开源的thrift，并在上层封装了服务注册和自动分配的功能，我将在两个部分分别介绍我司的RPC框架，首先是从底层进行分析整个的工作原理，下一步完成给thrift添加上下文，最终介绍我司的封装 Thrift源于Facebook, 目前已经作为开源项目提交给了Apahce。Thrift解决了Facebook各系统的大数据量传输通信和内部不同语言环境的跨平台调用。 官网Thrift的官方网站: http://thrift.apache.org/ 特点作为一个高性能的RPC框架，Thrift的主要特点有 基于二进制的高性能的编解码框架 基于NIO的底层通信 相对简单的服务调用模型 使用IDL支持跨平台调用 核心组件Thrift其中包含了如下的几个核心组件： TProtocol: 协议和编解码组件 TTransport: 传输组件 TProcessor: 服务调用组件 TServer，Client: 服务器和客户端组件 IDL: 服务描述组件，负责生产跨平台客户端 我会在后面的文章中依次介绍每一个组件 建议在学习本系列文章之前，建议具备的知识点： socket网络编程 NIO基础知识，以及nio socket实现机制]]></content>
       <tags>
-        <tag>原理</tag>
         <tag>RPC</tag>
+        <tag>原理</tag>
         <tag>源码</tag>
         <tag>Thrift</tag>
       </tags>
@@ -27,8 +27,8 @@
     <url>%2F2017%2F08%2F13%2FClassLoader%E5%88%86%E6%9E%90%2F</url>
     <content type="text"><![CDATA[ClassLoader的分类整体上一共有三种，也是classloader的加载顺序 bootstrap classLoader –这个是JVM级别的 extension classLoader –这个是扩展加载器 system classLoader –应用类加载器 下面依次介绍这三个ClassLoader. Bootstrap classLoader首先来说，这个加载器的被调用时机]]></content>
       <tags>
-        <tag>Java</tag>
         <tag>原理</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
