@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="原理,RPC,源码,Thrift," />
+  <meta name="keywords" content="RPC,原理,源码,Thrift," />
 
 
 
@@ -95,7 +95,7 @@
 
 
 <meta name="description" content="简介在介绍完IO流以后，基本上就知道了服务端和客户端是如何建立链接以及进行数据传输的，但是对于如何进行数据的序列化和反序列化，将在本文进行详 细记介绍。协议层的抽象类方法叫做：TProtocol,在包org.apache.thrift.protocol下。其中定义了协议的所有方法">
-<meta name="keywords" content="原理,RPC,源码,Thrift">
+<meta name="keywords" content="RPC,原理,源码,Thrift">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Thrift源码分析--Protocol">
 <meta property="og:url" content="/2017/08/25/Thrift源码分析-Protocol/index.html">
@@ -402,9 +402,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/原理/" rel="tag"># 原理</a>
-          
             <a href="/tags/RPC/" rel="tag"># RPC</a>
+          
+            <a href="/tags/原理/" rel="tag"># 原理</a>
           
             <a href="/tags/源码/" rel="tag"># 源码</a>
           
@@ -421,8 +421,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/16/Thrift源码分析-Transport/" rel="next" title="Thrift源码分析--Transport">
-                <i class="fa fa-chevron-left"></i> Thrift源码分析--Transport
+              <a href="/2017/08/20/Thrift源码分析-请求流程图/" rel="next" title="Thrift源码分析--请求流程图">
+                <i class="fa fa-chevron-left"></i> Thrift源码分析--请求流程图
               </a>
             
           </div>
@@ -430,6 +430,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/26/Thrift源码分析-TCompactProtocol--密集型协议原理/" rel="prev" title="Thrift源码分析-TCompactProtocol--密集型协议原理">
+                Thrift源码分析-TCompactProtocol--密集型协议原理 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -510,7 +514,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -605,7 +609,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
